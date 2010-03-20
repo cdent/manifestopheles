@@ -1,0 +1,61 @@
+The devil is in the details.
+
+A manifesto is of necessity a collection of mostly context free
+glittering generalities designed to convince through demagoguery
+rather than authority, fact, truth or reference.
+
+This is _good_. We are all motivated by belief, emotion and the
+things that inspire, whether we choose to admit it not.
+
+However, it would be nice if when manifesting a manifesto, one 
+could lend some context and credibility to the ravings of the 
+inspired mind.
+
+Thus manifestopheles.
+
+The idea is that everything an individual writes is embedded in
+their own sense of what the words they use connote.
+manifestopheles provides a wiki-like way of attached a manifesto
+to the details: a personal dictionary of words and phrases auto-
+linked from the manifesto. Many manifestos, one dictionary.
+
+-=-=-
+
+This idea is based on my previous thing, called warp, which would
+auto link words and phrases in documents attached to and within
+a dictionary, creating a web of unintentional but perhaps meanginful
+connections. 
+
+manifestopheles reimplements warp on a TiddlyWeb architecture,
+taking advantage of bags and the recipe cascade to attach different
+manifestos to a single dictionary, or even different dictionaries
+(what does manfiesto on dictionary A _mean_ compared to the same
+manifesto on dictionary B?).
+
+-=-=-
+
+The basic idea is that a manifesto is a tiddler A in bag B which is
+part of recipe C. Recipe C also includes bag D which is the dictionary.
+When tiddler A is displayed any phrases or words (phrases checked first)
+which are tiddler titles from bag D are displayed as links to the
+tiddler. When that tiddler is displayed, it to is parsed for
+phrases and words, creating links.
+
+All this is embedded in a navigation and editing/annotating UI. For
+anybody there's:
+
+* What amounts to a recent changes.
+* A way (to be determined) to comment/annotate.
+
+For the author/admin:
+
+* Any tiddler can be edited and saved back to its original home.
+* When text in any tiddler is selected, a button can be pushed
+  which creates a new tiddler with a title of the selected text
+  (normalized) and displays an editing interface.
+
+In a deluxe version there would be a way to layer on functionality
+by adding in additional bags. For example, other people's dictionaries,
+turning annotations on and off, that sort of thing.
+
+Chris Dent, 2010
