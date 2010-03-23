@@ -16,7 +16,8 @@ def render(tiddler, environ):
     """
     store = environ['tiddlyweb.store']
     manifesto = environ['tiddlyweb.manifesto']
-    bag = store.get(Bag(environ['tiddlyweb.dictionary']))
+    dictionary = environ['tiddlyweb.dictionary']
+    bag = store.get(Bag(dictionary))
 
     def space_count(input):
         return input.count(' ')

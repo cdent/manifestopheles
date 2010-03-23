@@ -17,6 +17,11 @@ input.grayed {
     color: white;
 }
 
+#editorial a {
+    text-decoration: none;
+    color: white;
+}
+
 h1 a {
     text-decoration: none;
     color: white;
@@ -67,5 +72,22 @@ h1 a {
     font-size: 125%;
     min-height: 100%;
     height: auto;
+    white-space: pre;
+}
+
+#content a:link {
+    text-decoration: none;
+    border-bottom: thin solid gray;
+}
+
+#content a:visited {
+    text-decoration: none;
+    border-bottom: thin dotted gray;
+}
+
+#content a:hover {
+    text-decoration: none;
+    border-top: thin dotted gray;
+    border-bottom: none;
 }
 

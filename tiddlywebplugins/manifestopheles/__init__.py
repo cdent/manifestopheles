@@ -68,29 +68,30 @@ def manifestor(environ, start_response):
     except NoRecipeError, exc:
         raise HTTP404('no such manifesto: %s' % exc)
 
-    kept_bag, _ = recipe.get_recipe()[-1]
+    manifesto_bag, _ = recipe.get_recipe()[-1]
 
-    tiddler = Tiddler('manifesto', kept_bag)
+    tiddler = Tiddler('manifesto', manifesto_bag)
     try:
         tiddler = store.get(tiddler)
     except NoTiddlerError:
         pass
 
-    kept_bag = None
+    dictionary_bag = None
     for bag, filter in recipe.get_recipe():
         if bag.endswith('-dictionary'):
-            kept_bag = bag
+            dictionary_bag = bag
             break
 
     environ['tiddlyweb.manifesto'] = manifesto
-    environ['tiddlyweb.dictionary'] = kept_bag
+    environ['tiddlyweb.dictionary'] = dictionary_bag
     output = render_wikitext(tiddler, environ)
 
     if output == '':
         output = 'Pontificate!'
 
     template = get_template(environ, 'display.html')
-    return template.generate(weAuthed='hi', tiddler='manifesto', bag=kept_bag, title=manifesto, output=output)
+    return template.generate(weAuthed='hi', tiddler='manifesto', dictionary=dictionary_bag,
+            bag=manifesto_bag, title=manifesto, output=output)
 
 @do_html()
 def definition(environ, start_response):
@@ -126,5 +127,6 @@ def definition(environ, start_response):
         output = 'Pontificate!'
 
     template = get_template(environ, 'display.html')
-    return template.generate(weAuthed='hi', tiddler=definition, bag=kept_bag, title=manifesto, output=output)
+    return template.generate(weAuthed='hi', tiddler=definition, bag=kept_bag,
+            dictionary=kept_bag, title=manifesto, output=output)
 

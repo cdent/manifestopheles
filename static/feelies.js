@@ -1,18 +1,52 @@
 
 $(function() {
+    var make_link = function(title) {
+        var href = window.location.href;
+        var path_parts = window.location.pathname.split('/').slice(1);
+        if (title !== 'manifesto') {
+            if (path_parts.length > 2) {
+                return window.location.protocol + '//' +
+                    window.location.host + '/' + path_parts[0] + '/' +
+                    path_parts[1] + '/' + encodeURIComponent(title);
+            } else {
+                return href + "/" + encodeURIComponent(title);
+            }
+        } else {
+            if (path_parts.lenght < 3) {
+                return href;
+            } else {
+                return window.location.protocol + '//' + 
+                    window.location.host + '/' + path_parts[0] + '/' +
+                    path_parts[1];
+            }
+        }
+    };
+
+    var recent_changes = function() {
+        var bag = new TiddlyWeb.Bag(dictionary_bag, window.location.protocol +
+                '//' + window.location.host);
+        var details = $("#details");
+        bag.tiddlers().get(
+            function(data, status, xhr) {
+                $.each(data, function(index, tiddler) {
+                    details.append('<li><a href="' + make_link(tiddler.title)
+                        + '">' + tiddler.title + '</a></li>\n');
+                    });
+            },
+            function(data, start, xhr) {
+                details.append('<li>' + status + '</li>');
+            },
+            'sort=-modified;limit=10'
+        );
+    };
+
+    recent_changes();
+
     $("#contextify").click( function() {
         var selection = window.getSelection();
         selection = jQuery.trim(selection.toString().toLowerCase().replace(/\s+/, ' '));
         if (selection) {
-            var href = window.location.href;
-            var path_parts = window.location.pathname.split('/').slice(1);
-            if (path_parts.length > 2) {
-                window.location.href = window.location.protocol + '//' +
-                    window.location.host + '/' + path_parts[0] + '/' +
-                    path_parts[1] + '/' + encodeURIComponent(selection);
-            } else {
-                window.location.href = href + "/" + encodeURIComponent(selection);
-            }
+            window.location.href = make_link(selection);
         }
     });
 
@@ -56,18 +90,18 @@ $(function() {
         }
 
         var save_it_up = function(content) {
-            c.fadeOut('slow', function() { c.fadeIn('fast');});
+            c.fadeOut('slow');
             target_tiddler = new TiddlyWeb.Tiddler(tiddler);
-            target_tiddler.bag = new TiddlyWeb.Bag(bag, window.location.protocol +
+            target_tiddler.bag = new TiddlyWeb.Bag(this_bag, window.location.protocol +
                     '//' + window.location.host);
             target_tiddler.text = content.text();
             target_tiddler.put(
                     function(data, status ,xhr) {
-                        c.css({background:'white'});
-                        $("#pontificate").css({background:'white'});
-                        editing = false;
+                        alert('tiddler ' + tiddler);
+                        window.location.href = make_link(tiddler);
                     },
                     function(data, status, xhr) {
+                        c.fadeIn('fast');
                         alert('hmmm: ' + status + data);
                     });
         }

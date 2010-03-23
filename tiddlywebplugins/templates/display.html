@@ -12,7 +12,8 @@
         type='text/javascript'></script>
 <script type='text/javascript'>
 var weAuthed = '{{ weAuthed }}';
-var bag = '{{ bag }}';
+var this_bag = '{{ bag }}';
+var dictionary_bag = '{{ dictionary }}';
 var tiddler = '{{ tiddler }}';
 </script>
     </head>
@@ -21,10 +22,7 @@ var tiddler = '{{ tiddler }}';
     <div id="realbody">
     <div id="editorial">
         <h2>Details</h2>
-        <ul>
-        <li>A thing</li>
-        <li>Other thing</li>
-        <li>Stuff</li>
+        <ul id="details">
         </ul>
     </div>
 <pre id="content">
