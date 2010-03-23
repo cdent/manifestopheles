@@ -4,9 +4,10 @@ A manifesto contextualizer.
 
 import urllib
 
-from tiddlywebplugins.utils import do_html
+from tiddlywebplugins.utils import do_html, get_store, ensure_bag
 from tiddlywebplugins.templates import get_template
 
+from tiddlyweb.manage import make_command, usage
 from tiddlyweb.web.http import HTTP404
 
 from tiddlyweb.model.recipe import Recipe
@@ -24,6 +25,23 @@ def init(config):
         config['selector'].add('/manifestos/{manifesto_name:segment}/{definition:segment}',
                 GET=definition)
     config['wikitext.default_renderer'] = 'tiddlywebplugins.manifestopheles.contextify'
+
+    @make_command()
+    def manifest(args):
+        """Make a new manifesto. <manifesto name> <dictionary prefix>"""
+        store = get_store(config)
+        try:
+            recipe_name = args[0]
+            bag_name = args[1] + '-dictionary'
+        except IndexError:
+            usage("manifesto name and dictionary prefix required")
+        manifesto_bag = ensure_bag(recipe_name, store) # add policy info later
+        dictionary_bag = ensure_bag(bag_name, store)
+        recipe = Recipe(recipe_name)
+        recipe.set_recipe([
+            (bag_name, ''),
+            (recipe_name, '')])
+        recipe = store.put(recipe)
 
 
 def home(environ, start_response):
@@ -57,6 +75,12 @@ def manifestor(environ, start_response):
         tiddler = store.get(tiddler)
     except NoTiddlerError:
         pass
+
+    kept_bag = None
+    for bag, filter in recipe.get_recipe():
+        if bag.endswith('-dictionary'):
+            kept_bag = bag
+            break
 
     environ['tiddlyweb.manifesto'] = manifesto
     environ['tiddlyweb.dictionary'] = kept_bag

@@ -43,11 +43,8 @@ $(function() {
         var toggle_edit = function() {
             switch(editing) {
                 case true:
-                    c.css({background:'white'});
-                    $("#pontificate").css({background:'white'});
                     c.get(0).contentEditable = false;
-                    save_it_up(c.text());
-                    editing = false;
+                    save_it_up(c);
                     break;
                 case false:
                     c.get(0).contentEditable = true;
@@ -59,7 +56,20 @@ $(function() {
         }
 
         var save_it_up = function(content) {
-            alert(content);
+            c.fadeOut('slow', function() { c.fadeIn('fast');});
+            target_tiddler = new TiddlyWeb.Tiddler(tiddler);
+            target_tiddler.bag = new TiddlyWeb.Bag(bag, window.location.protocol +
+                    '//' + window.location.host);
+            target_tiddler.text = content.text();
+            target_tiddler.put(
+                    function(data, status ,xhr) {
+                        c.css({background:'white'});
+                        $("#pontificate").css({background:'white'});
+                        editing = false;
+                    },
+                    function(data, status, xhr) {
+                        alert('hmmm: ' + status + data);
+                    });
         }
     }
 });

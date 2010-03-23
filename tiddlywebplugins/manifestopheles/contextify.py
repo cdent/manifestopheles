@@ -21,8 +21,14 @@ def render(tiddler, environ):
     def space_count(input):
         return input.count(' ')
 
-    tiddler_titles = [btiddler.title for btiddler in bag.gen_tiddlers()]
+    tiddler_titles = [btiddler.title.lower() for btiddler in bag.gen_tiddlers()]
     tiddler_titles.sort(key=space_count, reverse=True)
+
+    try:
+        tiddler_titles.remove(tiddler.title.lower())
+    except ValueError:
+        pass # this tiddler not in titles
+
 
     text = tiddler.text
 
@@ -33,9 +39,10 @@ def render(tiddler, environ):
         pat.append(title)
     pat = '|'.join(pat)
     pat = r'\b(%s)\b' % pat
+    pat = re.compile(pat, re.I)
     replace = r'<a title="\1" href="/manifestos/%s/\1">\1</a>' % manifesto
 
-    output = re.sub(pat, replace, text)
+    output = pat.sub(replace, text)
 
     def clean_attribute(match):
         attr = match.group(1)
