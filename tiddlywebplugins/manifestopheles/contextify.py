@@ -15,8 +15,8 @@ def render(tiddler, environ):
     Link found phrases to other tiddlers.
     """
     store = environ['tiddlyweb.store']
-    recipe_name = environ['wsgiorg.routing_args'][1]['recipe_name']
-    bag = store.get(Bag('%s-dictionary' % recipe_name))
+    manifesto = environ['tiddlyweb.manifesto']
+    bag = store.get(Bag(environ['tiddlyweb.dictionary']))
 
     def space_count(input):
         return input.count(' ')
@@ -33,7 +33,7 @@ def render(tiddler, environ):
         pat.append(title)
     pat = '|'.join(pat)
     pat = r'\b(%s)\b' % pat
-    replace = r'<a title="\1" href="/manifestos/%s/\1">\1</a>' % recipe_name
+    replace = r'<a title="\1" href="/manifestos/%s/\1">\1</a>' % manifesto
 
     output = re.sub(pat, replace, text)
 

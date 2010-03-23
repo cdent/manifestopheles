@@ -1,0 +1,71 @@
+
+body {
+    background: black;
+    color: white;
+    height: 100%;
+    margin: 1em 2.5em 2.5em 2.5em;
+}
+
+input.grayed {
+    border-color: gray;
+    background-color: gray;
+}
+
+#editorial {
+    float: right;
+    width: 20%;
+    color: white;
+}
+
+h1 a {
+    text-decoration: none;
+    color: white;
+}
+
+#realbody {
+    margin: 0;
+    height: 75%;
+}
+
+#actions {
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    left: -12.5em; 
+    top: 12.5em; 
+}
+
+.activate {
+    float: right;
+    display: inline;
+}
+
+.activate input {
+    padding-left; 1em;
+    padding-right; 1em;
+    color:black; 
+    background-color:white;
+    border:2px solid red; 
+    -moz-border-radius: 0 0 .5em .5em;
+    -webkit-border-radius: 0 0 .5em .5em;
+    font-size: 150%;
+}
+
+.activate input:hover {
+    cursor: pointer;
+}
+
+#content {
+    -moz-border-radius: 0 4em 4em 0;
+    -webkit-border-radius: 0 4em 4em 0;
+    width: 70%;
+    background: white;
+    color: black;
+    padding: 2em 2em 2em 2em;
+    font-size: 125%;
+    min-height: 100%;
+    height: auto;
+}
+

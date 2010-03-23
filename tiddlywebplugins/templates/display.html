@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Manifesto: {{ title }}</title>
+<link rel="stylesheet" type="text/css" href="/static/feelies.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
+        type="text/javascript"></script>
+<script src="/static/feelies.js"
+        type='text/javascript'></script>
+<script type='text/javascript'>
+var weAuthed = '{{ weAuthed }}';
+var bag = '{{ bag }}';
+var tiddler = '{{ tiddler }}';
+</script>
+    </head>
+    <body>
+        <h1><a href="/manifestos/{{ title }}">Manifesto: {{ title }}</a></h1>
+    <div id="realbody">
+    <div id="editorial">
+        <h2>Details</h2>
+        <ul>
+        <li>A thing</li>
+        <li>Other thing</li>
+        <li>Stuff</li>
+        </ul>
+    </div>
+<pre id="content">
+{{ output }}
+</pre>
+    </div>
+    <div id="actions">
+    <div class="activate"><input id="manifest" type="button" value="manifest!"/></div>
+{% if weAuthed %}
+    <div class="activate"><input id="pontificate" type="button" value="pontificate!"/></div>
+    <div class="activate"><input id="contextify" type="submit" value="contextify!"/></div>
+{% else %}
+    <div class="activate"><input class="grayed" id="xpontificate" type="button" value="pontificate!"/></div>
+    <div class="activate"><input class="grayed" id="xcontextify" type="submit" value="contextify!"/></div>
+{% endif %}
+    </div>
+    </body>
+</html>

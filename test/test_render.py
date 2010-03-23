@@ -58,7 +58,8 @@ def test_simple():
     environ = {
             'tiddlyweb.usersign': {'name': 'devil', 'roles': []},
             'tiddlyweb.store': store,
-            'wsgiorg.routing_args': [None, {'recipe_name': 'devil'}],
+            'tiddlyweb.manifesto': 'devil',
+            'tiddlyweb.dictionary': 'devil-dictionary',
             }
     tiddler = store.get(Tiddler('The Truth', 'x-manifesto'))
     output = render(tiddler, environ)
