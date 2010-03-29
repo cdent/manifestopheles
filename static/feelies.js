@@ -94,7 +94,10 @@ $(function() {
             target_tiddler = new TiddlyWeb.Tiddler(tiddler);
             target_tiddler.bag = new TiddlyWeb.Bag(this_bag, window.location.protocol +
                     '//' + window.location.host);
-            target_tiddler.text = content.text();
+            content.html(content.html().replace(/<br>/g, "\n").
+                    replace(/<div>/g, "\n").
+                    replace(/<\/div>/g, ""));
+            target_tiddler.text = content.text().replace(/\n{3,}/g, "\n\n");
             target_tiddler.put(
                     function(data, status ,xhr) {
                         alert('tiddler ' + tiddler);
