@@ -24,7 +24,7 @@ setup(
     packages = find_packages(exclude=['test']),
     platforms = 'Posix; MacOS X; Windows',
     install_requires = ['setuptools',
-        'tiddlyweb',
+        'tiddlyweb>=1.1.0',
         'tiddlywebplugins.utils',
         'tiddlywebplugins.templates',
         ],

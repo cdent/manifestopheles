@@ -22,7 +22,7 @@ def render(tiddler, environ):
     def space_count(input):
         return input.count(' ')
 
-    tiddler_titles = [btiddler.title.lower() for btiddler in bag.gen_tiddlers()]
+    tiddler_titles = [btiddler.title.lower() for btiddler in store.list_bag_tiddlers(bag)]
     tiddler_titles.sort(key=space_count, reverse=True)
 
     try:

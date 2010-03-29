@@ -40,6 +40,7 @@ $(function() {
         );
     };
 
+    $("#cancel").hide();
     recent_changes();
 
     $("#contextify").click( function() {
@@ -73,6 +74,15 @@ $(function() {
         $("#pontificate").click( function() {
                 toggle_edit();
         });
+        
+        var cancel_edit = function(old_content) {
+            editing = false;
+            $("#cancel").hide();
+            c.get(0).contentEditable = false;
+            c.html(old_content);
+            c.css({background:'white'});
+            $("#pontificate").css({background:'white'});
+        }
 
         var toggle_edit = function() {
             switch(editing) {
@@ -81,7 +91,11 @@ $(function() {
                     save_it_up(c);
                     break;
                 case false:
+                    var saved_html = c.html();
                     c.get(0).contentEditable = true;
+                    $("#cancel").show('fast').click( function() {
+                        cancel_edit(saved_html);
+                    });
                     c.css({background:'lightyellow'});
                     $("#pontificate").css({background:'lightyellow'});
                     editing = true;
@@ -91,6 +105,7 @@ $(function() {
 
         var save_it_up = function(content) {
             c.fadeOut('slow');
+            $("#cancel").hide('slow');
             target_tiddler = new TiddlyWeb.Tiddler(tiddler);
             target_tiddler.bag = new TiddlyWeb.Bag(this_bag, window.location.protocol +
                     '//' + window.location.host);
@@ -100,12 +115,10 @@ $(function() {
             target_tiddler.text = content.text().replace(/\n{3,}/g, "\n\n");
             target_tiddler.put(
                     function(data, status ,xhr) {
-                        alert('tiddler ' + tiddler);
                         window.location.href = make_link(tiddler);
                     },
                     function(data, status, xhr) {
                         c.fadeIn('fast');
-                        alert('hmmm: ' + status + data);
                     });
         }
     }

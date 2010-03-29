@@ -12,6 +12,7 @@ input.grayed {
 }
 
 #editorial {
+    margin: 0;
     float: right;
     width: 20%;
     color: white;
@@ -42,6 +43,22 @@ h1 a {
     top: 12.5em; 
 }
 
+#cancel {
+    color: white;
+    -moz-border-radius: .25em 0 0 .25em;
+    -webkit-border-radius: .25em 0 0 .25em;
+    border-left: 2px solid red;
+    visibility: show;
+    float: right;
+    padding: 0 30% 0 .25em;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+#cancel:hover {
+    cursor: pointer;
+}
+
 .activate {
     float: right;
     display: inline;
@@ -68,6 +85,7 @@ h1 a {
     width: 70%;
     background: white;
     color: black;
+    margin: 0;
     padding: 2em 2em 2em 2em;
     font-size: 125%;
     min-height: 100%;
