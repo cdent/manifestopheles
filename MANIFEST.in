@@ -1,2 +1,5 @@
 recursive-include test *
 include README Makefile
+include mangler.py
+include tiddlywebplugins/templates/*.html
+recursive-include tiddlywebplugins/manifestopheles/resources *

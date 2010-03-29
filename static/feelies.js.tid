@@ -1,3 +1,4 @@
+type: text/javascript
 
 $(function() {
     var make_link = function(title) {

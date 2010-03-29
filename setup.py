@@ -20,6 +20,7 @@ setup(
     long_description = open(os.path.join(os.path.dirname(__file__), 'README')).read(),
     author = AUTHOR,
     author_email = AUTHOR_EMAIL,
+    scripts = ['hell'],
     url = 'http://pypi.python.org/pypi/%s' % NAME,
     packages = find_packages(exclude=['test']),
     platforms = 'Posix; MacOS X; Windows',
@@ -27,6 +28,8 @@ setup(
         'tiddlyweb>=1.1.0',
         'tiddlywebplugins.utils',
         'tiddlywebplugins.templates',
+        'tiddlywebplugins.instancer',
         ],
-    zip_safe = False
+    zip_safe = False,
+    include_package_data = True,
     )
