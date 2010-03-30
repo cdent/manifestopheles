@@ -9,15 +9,19 @@ import re
 import urllib
 
 from tiddlyweb.model.bag import Bag
+from tiddlyweb.store import NoBagError
 
 def render(tiddler, environ):
     """
     Link found phrases to other tiddlers.
     """
-    store = environ['tiddlyweb.store']
-    manifesto = environ['tiddlyweb.manifesto']
-    dictionary = environ['tiddlyweb.dictionary']
-    bag = store.get(Bag(dictionary))
+    try:
+        store = environ['tiddlyweb.store']
+        manifesto = environ['tiddlyweb.manifesto']
+        dictionary = environ['tiddlyweb.dictionary']
+        bag = store.get(Bag(dictionary))
+    except (KeyError, NoBagError):
+        return '<pre>\n%s\n</pre>' % tiddler.txt
 
     def space_count(input):
         return input.count(' ')
@@ -50,7 +54,7 @@ def render(tiddler, environ):
         value = match.group(2)
         value = re.sub('\s+', ' ', value)
         if attr == 'href':
-            value = urllib.quote(value)
+            value = urllib.quote(value.lower())
         return '%s="%s"' % (attr, value)
 
     output = re.sub(r'(title|href)="([^"]+)"', clean_attribute, output)
