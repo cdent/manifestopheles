@@ -21,12 +21,18 @@ def render(tiddler, environ):
         dictionary = environ['tiddlyweb.dictionary']
         bag = store.get(Bag(dictionary))
     except (KeyError, NoBagError):
-        return '<pre>\n%s\n</pre>' % tiddler.txt
+        return '<pre>\n%s\n</pre>' % tiddler.text
 
     def space_count(input):
         return input.count(' ')
 
-    tiddler_titles = [btiddler.title.lower() for btiddler in store.list_bag_tiddlers(bag)]
+    try:
+        tiddler_titles = [btiddler.title.lower() for btiddler in
+                store.list_bag_tiddlers(bag)]
+    except AttributeError:
+        tiddler_titles = [btiddler.title.lower() for
+                btiddler in bag.list_tiddlers()]
+
     tiddler_titles.sort(key=space_count, reverse=True)
 
     try:
@@ -37,17 +43,21 @@ def render(tiddler, environ):
 
     text = tiddler.text
 
-    # build the regular expression
+
+    # build the title regular expression
     pat = []
     for title in tiddler_titles:
         title = re.sub(r'\s+', r'\s+', title)
         pat.append(title)
-    pat = '|'.join(pat)
-    pat = r'\b(%s)\b' % pat
-    pat = re.compile(pat, re.I)
-    replace = r'<a title="\1" href="/manifestos/%s/\1">\1</a>' % manifesto
+    if pat:
+        pat = '|'.join(pat)
+        pat = r'\b(%s)\b' % pat
+        pat = re.compile(pat, re.I)
+        replace = r'<a title="\1" href="/manifestos/%s/\1">\1</a>' % manifesto
 
-    output = pat.sub(replace, text)
+        output = pat.sub(replace, text)
+    else:
+        output = text
 
     def clean_attribute(match):
         attr = match.group(1)
@@ -58,5 +68,9 @@ def render(tiddler, environ):
         return '%s="%s"' % (attr, value)
 
     output = re.sub(r'(title|href)="([^"]+)"', clean_attribute, output)
+
+    http_linker_re = re.compile(r'(\s+)(http://[^\s]+?)(\s+|$)', re.I)
+    http_linker_replace = r'\1<a title="\2" href="\2">\2</a>\3'
+    output = http_linker_re.sub(http_linker_replace, output)
     
     return output
