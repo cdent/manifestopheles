@@ -17,7 +17,14 @@ from tiddlyweb.wikitext import render_wikitext
 
 from tiddlyweb.store import NoRecipeError, NoTiddlerError
 
+from tiddlywebplugins.instancer.util import get_tiddler_locations
+
+from tiddlyweb.util import merge_config
+from tiddlywebplugins.manifestopheles.config import config as twmconfig
+
+
 def init(config):
+    merge_config(config, twmconfig)
     if 'selector' in config:
         config['selector'].add('/', GET=home)
         config['selector'].add('/manifestos', GET=manifestos)
@@ -25,6 +32,7 @@ def init(config):
         config['selector'].add('/manifestos/{manifesto_name:segment}/{definition:segment}',
                 GET=definition)
     config['wikitext.default_renderer'] = 'tiddlywebplugins.manifestopheles.contextify'
+
 
     @make_command()
     def manifest(args):

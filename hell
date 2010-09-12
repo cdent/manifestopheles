@@ -10,7 +10,7 @@ import os
 cwd = os.getcwd()
 sys.path.insert(0, cwd)
 
-from tiddlyweb.config import config
+from tiddlywebplugins.manifestopheles.config import config as init_config
 from tiddlywebplugins.instancer.util import spawn
 from tiddlywebplugins.manifestopheles import instance
 
@@ -18,8 +18,7 @@ from tiddlywebplugins.manifestopheles import instance
 def main(args):
     args = [unicode(arg, "UTF-8") for arg in args]
     instance_path = args[1]
-    config['instance_tiddlers'] = instance.instance_tiddlers
-    spawn(instance_path, config, instance)
+    spawn(instance_path, init_config, instance)
     return True
 
 

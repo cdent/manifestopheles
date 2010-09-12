@@ -3,7 +3,7 @@ AUTHOR = 'Chris Dent'
 AUTHOR_EMAIL = 'python@example.org'
 NAME = 'tiddlywebplugins.manifestopheles'
 DESCRIPTION = 'A manifesto contextualizer'
-VERSION = '0.1'
+VERSION = '0.2'
 
 
 import os
