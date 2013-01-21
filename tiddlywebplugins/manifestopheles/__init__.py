@@ -4,11 +4,12 @@ A manifesto contextualizer.
 
 import urllib
 
+from httpexceptor import HTTP404
+
 from tiddlywebplugins.utils import do_html, get_store, ensure_bag
 from tiddlywebplugins.templates import get_template
 
 from tiddlyweb.manage import make_command, usage
-from tiddlyweb.web.http import HTTP404
 
 from tiddlyweb.model.recipe import Recipe
 from tiddlyweb.model.tiddler import Tiddler
