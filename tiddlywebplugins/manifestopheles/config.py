@@ -1,8 +1,7 @@
-from tiddlywebplugins.instancer.util import get_tiddler_locations
-
-from tiddlywebplugins.manifestopheles.instance import store_contents
+"""
+Simple default config for manifestopheles.
+"""
 
 config = {
-        'instance_tiddlers': get_tiddler_locations(store_contents,
-            'tiddlywebplugins.manifestopheles'),
+        'instance_pkgstores': ['tiddlywebplugins.manifestopheles'],
 }

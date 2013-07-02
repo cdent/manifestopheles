@@ -4,6 +4,11 @@
 manifestopheles instantiation
 """
 
+try:
+    import mangler
+except ImportError:
+    pass
+
 import sys
 import os
 # extend module search path for access to tiddlywebconfig.py
@@ -11,7 +16,7 @@ cwd = os.getcwd()
 sys.path.insert(0, cwd)
 
 from tiddlywebplugins.manifestopheles.config import config as init_config
-from tiddlywebplugins.instancer.util import spawn
+from tiddlywebplugins.imaker import spawn
 from tiddlywebplugins.manifestopheles import instance
 
 

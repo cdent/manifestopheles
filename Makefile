@@ -11,7 +11,7 @@ clean:
 	rm -r tiddlywebplugins/manifestopheles/resources || true
 
 remotes:
-	./cacher
+	twibuilder tiddlywebplugins.manifestopheles
 
 test:
 	py.test -x test

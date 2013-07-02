@@ -6,8 +6,8 @@ store_structure = {}
 store_structure['bags'] = {}
 
 store_contents['static'] = [
-        'file:static/feelies.js.tid',
-        'file:static/feelies.css.tid',
+        'static/feelies.js.tid',
+        'static/feelies.css.tid',
 ]
 
 store_structure['bags']['static'] = {
