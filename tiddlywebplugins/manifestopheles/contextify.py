@@ -3,13 +3,12 @@ A TiddlyWeb renderer which marks up a manifesto
 and friends.
 """
 
-# XXX tiddlyweb 1.0
-
 import re
 import urllib
 
 from tiddlyweb.model.bag import Bag
 from tiddlyweb.store import NoBagError
+
 
 def render(tiddler, environ):
     """
@@ -23,8 +22,8 @@ def render(tiddler, environ):
     except (KeyError, NoBagError):
         return '<pre>\n%s\n</pre>' % tiddler.text
 
-    def space_count(input):
-        return input.count(' ')
+    def space_count(content):
+        return content.count(' ')
 
     try:
         tiddler_titles = [btiddler.title.lower() for btiddler in
@@ -38,11 +37,9 @@ def render(tiddler, environ):
     try:
         tiddler_titles.remove(tiddler.title.lower())
     except ValueError:
-        pass # this tiddler not in titles
-
+        pass  # this tiddler not in titles
 
     text = tiddler.text
-
 
     # build the title regular expression
     pat = []
@@ -62,7 +59,7 @@ def render(tiddler, environ):
     def clean_attribute(match):
         attr = match.group(1)
         value = match.group(2)
-        value = re.sub('\s+', ' ', value)
+        value = re.sub(r'\s+', ' ', value)
         if attr == 'href':
             value = urllib.quote(value.lower())
         return '%s="%s"' % (attr, value)
@@ -72,5 +69,5 @@ def render(tiddler, environ):
     http_linker_re = re.compile(r'(\s+)(http://[^\s]+?)(\s+|$)', re.I)
     http_linker_replace = r'\1<a title="\2" href="\2">\2</a>\3'
     output = http_linker_re.sub(http_linker_replace, output)
-    
+
     return output
